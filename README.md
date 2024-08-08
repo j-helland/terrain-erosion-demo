@@ -3,9 +3,11 @@ This is a small OpenGL demo that simulates particle-based hydraulic terrain eros
 
 See [below](#building--running) for build instructions. See [code structure](#code-structure) below for advice on how to navigate the codebase.
 
+![](./screenshots/screenshot.png)
+
 
 # Usage
-This repository _should_ ship with everything required to build and run the application. There may be hiccups on non-macOS systems.
+This repository _should_ ship with everything required to build and run the application. There may be hiccups on non-macOS systems, since this was the development platform that I used. However, cross-compilation to Windows works flawlessly.
 
 ## Zig Version
 Compiled with Zig `0.14.0-dev.653+91c17979f`. This is an experimental compiler version; breaking changes may be introduced in future Zig version. It is strictly not backwards compatible.
