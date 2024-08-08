@@ -1,0 +1,1 @@
+These dependencies are sourced from the wonderful [zig-gamedev](https://github.com/zig-gamedev/zig-gamedev) project.
