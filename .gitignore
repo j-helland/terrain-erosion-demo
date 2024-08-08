@@ -1,0 +1,10 @@
+# macos
+.DS_store
+
+# zig
+zig-out/
+zig-cache/
+.zig-cache/
+
+# misc
+imgui.ini
