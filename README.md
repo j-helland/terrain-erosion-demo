@@ -1,7 +1,7 @@
 # About
 This is a small OpenGL demo that simulates particle-based hydraulic terrain erosion with mass transfer dynamics. A huge source of inspiration for this demo was [Nick's Blog](https://nickmcd.me/2020/04/10/simple-particle-based-hydraulic-erosion/).
 
-See [below](#building--running) for build instructions. See [code structure](#code-structure) below for advice on how to navigate the codebase.
+See [below](#building--running) for build instructions. See [code structure](#code-structure) below for advice on how to navigate the codebase. See releases for precompiled binaries.
 
 ![](./screenshots/screenshot.png)
 
