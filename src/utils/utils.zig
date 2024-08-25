@@ -4,7 +4,6 @@ const opengl = @import("zopengl");
 const gl = opengl.bindings;
 const zmath = @import("zmath");
 
-pub const Pool = @import("pool.zig").Pool;
 pub const Timer = @import("timer.zig").Timer;
 
 pub fn Rect(comptime T: type) type {

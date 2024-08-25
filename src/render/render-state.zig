@@ -8,6 +8,7 @@ const ModelPoints = @import("model.zig").ModelPoints;
 
 const shd = @import("shader.zig");
 const Shader = shd.Shader;
+const ShaderInfo = shd.ShaderInfo;
 
 /// Dictates how OpenGL should draw models.
 pub const GLPolygonMode = enum(i32) {
@@ -84,14 +85,14 @@ const ShadersState = struct {
 
     pub fn init(allocator: std.mem.Allocator) !@This() {
         return .{
-            .terrain = try Shader.init(allocator, .{
-                .vert = shd.SHADER_TERRAIN_VERT,
-                .frag = shd.SHADER_TERRAIN_FRAG,
+            .terrain = try Shader.init(allocator, &.{
+                .vertex_path = shd.SHADER_TERRAIN_VERT,
+                .fragment_path = shd.SHADER_TERRAIN_FRAG,
             }),
 
-            .particles = try Shader.init(allocator, .{
-                .vert = shd.SHADER_PARTICLES_VERT,
-                .frag = shd.SHADER_PARTICLES_FRAG,
+            .particles = try Shader.init(allocator, &.{
+                .vertex_path = shd.SHADER_PARTICLES_VERT,
+                .fragment_path = shd.SHADER_PARTICLES_FRAG,
             }),
         };
     }

@@ -4,5 +4,4 @@ comptime {
     _ = @import("simulation/heightmap.zig");
     _ = @import("simulation/particle.zig");
     _ = @import("utils/timer.zig");
-    _ = @import("utils/pool.zig");
 }

@@ -3,7 +3,6 @@ const zmath = @import("zmath");
 
 const utils = @import("../utils/utils.zig");
 const Rect = utils.Rect;
-const Pool = utils.Pool;
 
 pub const ParticleID = usize;
 pub const ParticleIDMap = std.AutoArrayHashMap(ParticleID, *Particle);
@@ -70,14 +69,14 @@ pub const ParticleSpawner = enum {
 pub const ParticleManager = struct {
     const Self = @This();
 
-    pool: Pool(Particle),
+    pool: std.heap.MemoryPool(Particle),
     particles: ParticleIDMap,
     next_id: ParticleID = 0,
 
     pub fn init(allocator: std.mem.Allocator) Self {
         return .{
             // TODO: Need to make sure page allocator is performant enough. Expect significant hangs when new pages are requested. Might switch to FixedBufferAllocator instead.
-            .pool = Pool(Particle).init(std.heap.page_allocator),
+            .pool = std.heap.MemoryPool(Particle).init(std.heap.page_allocator),
             .particles = ParticleIDMap.init(allocator),
         };
     }
@@ -88,16 +87,13 @@ pub const ParticleManager = struct {
     }
 
     pub fn clearRetainingCapacity(self: *Self) void {
-        var it = self.iterator();
-        while (it.next()) |entry| {
-            self.pool.free(entry.value_ptr.*);
-        }
+        _ = self.pool.reset(.free_all);
         self.particles.clearRetainingCapacity();
     }
 
     pub fn spawn(self: *Self) !struct{ id: ParticleID, particle: *Particle } {
         defer self.next_id += 1;
-        const particle = try self.pool.alloc();
+        const particle = try self.pool.create();
         try self.particles.put(self.next_id, particle);
         return .{ .id = self.next_id, .particle = particle };
     }
@@ -108,7 +104,7 @@ pub const ParticleManager = struct {
 
     pub fn remove(self: *Self, id: ParticleID) void {
         if (self.particles.fetchSwapRemove(id)) |entry| {
-            self.pool.free(entry.value);
+            self.pool.destroy(entry.value);
         }
     }
 

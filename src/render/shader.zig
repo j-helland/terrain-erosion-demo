@@ -18,17 +18,22 @@ pub const ShaderError = error{
     IncludeFailed,
 };
 
+pub const ShaderInfo = struct {
+    vertex_path: []const u8,
+    fragment_path: []const u8,
+};
+
 pub const Shader = struct {
     const Self = @This();
 
     program_id: u32 = 0,
 
-    pub fn init(allocator: std.mem.Allocator, shaders: struct { vert: []const u8, frag: []const u8 }) !Self {
-        const vert = try buildShader(allocator, shaders.vert, gl.VERTEX_SHADER);
+    pub fn init(allocator: std.mem.Allocator, shaders: *const ShaderInfo) !Self {
+        const vert = try buildShader(allocator, shaders.vertex_path, gl.VERTEX_SHADER);
         defer gl.deleteShader(vert.id);
         defer allocator.free(vert.src);
 
-        const frag = try buildShader(allocator, shaders.frag, gl.FRAGMENT_SHADER);
+        const frag = try buildShader(allocator, shaders.fragment_path, gl.FRAGMENT_SHADER);
         defer gl.deleteShader(frag.id);
         defer allocator.free(frag.src);
 
